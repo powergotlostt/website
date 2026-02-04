@@ -2,80 +2,92 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Yukae Bot</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{background:#020617;color:white}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif;scroll-behavior:smooth}
+body{background:#020617;color:#fff}
 
-/* ===== Loader ===== */
+/* Loader */
 #loader{
 position:fixed;inset:0;background:#020617;
-display:flex;flex-direction:column;align-items:center;justify-content:center;
-z-index:9999;animation:fadeOut 1s ease forwards;animation-delay:2.5s;
+display:flex;flex-direction:column;
+align-items:center;justify-content:center;
+z-index:9999;
+animation:fadeOut 1s ease forwards;
+animation-delay:2.5s;
 }
-#loader img{width:140px;height:140px;border-radius:20px;box-shadow:0 0 25px cyan}
-#loader h1{margin-top:10px;color:cyan;font-size:32px;text-shadow:0 0 20px cyan}
+.logo{width:140px;height:140px;border-radius:20px;
+box-shadow:0 0 25px cyan;
+animation:pulse 1.6s infinite alternate}
+#loader h1{color:cyan;margin-top:10px;font-size:32px}
 #loader p{opacity:.7}
+@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.08)}}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
-/* ===== Navbar ===== */
+/* Navbar */
 nav{
-display:flex;justify-content:space-between;align-items:center;
-padding:15px 40px;background:#0f172a;border-bottom:1px solid #0ea5e9;
-position:sticky;top:0
+position:sticky;top:0;background:#000;
+padding:15px 25px;
+display:flex;justify-content:space-between;
+border-bottom:1px solid cyan;
+z-index:1000
 }
 nav h2{color:cyan}
-nav button{
-background:transparent;border:1px solid cyan;color:cyan;
-padding:8px 14px;margin-left:8px;border-radius:8px;cursor:pointer
-}
-nav button:hover{background:cyan;color:black}
+nav a{color:#fff;text-decoration:none;margin-left:15px}
+nav a:hover{color:cyan}
 
-/* ===== Sections ===== */
-section{display:none;padding:60px 40px;min-height:100vh}
-.active{display:block}
+/* Sections */
+section{max-width:1000px;margin:auto;padding:80px 20px}
+h1,h2{color:cyan;margin-bottom:20px}
+p{opacity:.85}
 
-/* ===== Hero ===== */
-.hero{
-display:flex;flex-direction:column;align-items:center;text-align:center;
-gap:20px;margin-top:60px
-}
-.hero img{
-width:180px;border-radius:20px;box-shadow:0 0 30px cyan
-}
-.hero h1{font-size:42px;color:cyan}
-.hero p{opacity:.8}
-
-/* ===== Cards ===== */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;margin-top:30px
-}
 .card{
-background:#0f172a;padding:20px;border-radius:14px;
-border:1px solid #0ea5e9;box-shadow:0 0 15px rgba(0,255,255,.2)
+background:#0a0a0a;
+border:1px solid cyan;
+border-radius:16px;
+padding:20px;
+box-shadow:0 0 15px rgba(0,255,255,.15);
+transition:.2s;
 }
-.card h3{color:cyan;margin-bottom:10px}
-.card ul{padding-left:18px;opacity:.9}
+.card:hover{box-shadow:0 0 20px cyan;transform:translateY(-4px)}
 
-/* ===== Commands ===== */
-.commands h2{color:cyan;margin:30px 0 10px}
+footer{text-align:center;padding:30px;border-top:1px solid cyan;color:#777}
 
-/* ===== Dev ===== */
-.dev{
-display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px
+/* FAQ */
+.faq{max-width:800px;margin:auto}
+.faq-item{margin-bottom:12px}
+.faq-question{
+width:100%;
+background:#0a0a0a;
+border:1px solid cyan;
+color:#fff;
+padding:15px;
+font-size:16px;
+border-radius:12px;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
 }
-.dev img{
-width:160px;border-radius:20px;box-shadow:0 0 25px cyan
+.faq-answer{
+max-height:0;
+overflow:hidden;
+background:#050505;
+padding:0 15px;
+border:1px solid cyan;
+border-top:none;
+border-radius:0 0 12px 12px;
+transition:max-height .3s ease,padding .3s ease;
+}
+.faq-item.active .faq-answer{
+max-height:220px;
+padding:15px;
 }
 
-/* Mobile */
-@media(max-width:600px){
-nav{flex-direction:column;gap:10px}
-.hero h1{font-size:28px}
+/* Responsive */
+@media(max-width:700px){
+nav{flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
@@ -84,115 +96,116 @@ nav{flex-direction:column;gap:10px}
 
 <!-- Loader -->
 <div id="loader">
-<img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg">
+<img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg" class="logo">
 <h1>Yukae</h1>
 <p>the only bot you need</p>
 </div>
 
-<!-- Navbar -->
+<!-- Navigation -->
 <nav>
 <h2>Yukae</h2>
 <div>
-<button onclick="show('home')">Home</button>
-<button onclick="show('commands')">Commands</button>
-<button onclick="show('developers')">Developers</button>
-<button onclick="show('stats')">Stats</button>
-<button onclick="show('support')">Support</button>
+<a href="#home">Home</a>
+<a href="#faq">FAQ</a>
+<a href="#developers">Developers</a>
+<a href="#support">Support</a>
 </div>
 </nav>
 
-<!-- HOME -->
-<section id="home" class="active">
-<div class="hero">
-<img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg">
-<h1>Yukae — All in One Utility Bot</h1>
-<p>Powerful multi-purpose Discord bot built for server owners</p>
-</div>
-
-<div class="grid">
-<div class="card"><h3>Utilities</h3><p>Advanced server tools & automation</p></div>
-<div class="card"><h3>Moderation</h3><p>Minimal automod + smart moderation</p></div>
-<div class="card"><h3>Giveaways</h3><p>Professional giveaway system</p></div>
-<div class="card"><h3>Community Tools</h3><p>Autoresponder + engagement features</p></div>
-</div>
-</section>
-
-<!-- COMMANDS -->
-<section id="commands" class="commands">
-
-<h2>General</h2>
-<div class="card"><ul>
-<li>avatar</li><li>banner</li><li>servericon</li>
-<li>membercount</li><li>poll</li><li>snipe</li>
-<li>serverinfo</li><li>userinfo</li>
-<li>botinfo</li><li>stats</li><li>ping</li>
-<li>invite</li><li>uptime</li>
-</ul></div>
-
-<h2>Giveaway</h2>
-<div class="card"><ul>
-<li>giveaway start</li>
-<li>giveaway end</li>
-<li>giveaway reroll</li>
-<li>giveaway config</li>
-</ul></div>
-
-<h2>Moderation</h2>
-<div class="card"><ul>
-<li>mute / unmute</li>
-<li>ban / unban</li>
-<li>kick</li>
-<li>slowmode</li>
-<li>purge commands</li>
-</ul></div>
-
-<h2>Extra Systems</h2>
-<div class="card"><ul>
-<li>autorole system</li>
-<li>welcome system</li>
-<li>media filters</li>
-<li>autoreact</li>
-</ul></div>
-
-</section>
-
-<!-- DEVELOPERS -->
-<section id="developers">
-<div class="dev">
-<img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg">
-<h1>Power_!</h1>
-<p>Experienced Discord manager with 3+ years experience building & managing communities</p>
-</div>
-</section>
-
-<!-- STATS -->
-<section id="stats">
-<div class="grid">
-<div class="card"><h3>500+</h3><p>Users</p></div>
-<div class="card"><h3>24/7</h3><p>Support</p></div>
-<div class="card"><h3>96.5%</h3><p>Uptime</p></div>
-</div>
-</section>
-
-<!-- SUPPORT -->
-<section id="support">
-<h1>Support Server</h1>
-<p style="margin-top:20px">
-<a href="https://discord.gg/ATSCwyk9fg" style="color:cyan;font-size:20px">
-Join Support Server
-</a>
+<!-- Home -->
+<section id="home">
+<h1>Yukae — All in One Utilities Bot</h1>
+<p>
+The perfect Discord bot for server owners. Utilities, moderation,
+automation, and management tools combined into one clean system.
+Built for performance, simplicity, and modern communities.
 </p>
 </section>
 
-<script>
-function show(id){
-document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-}
+<!-- FAQ -->
+<section id="faq">
+<h1>Yukae™ – Frequently Asked Questions</h1>
+<p style="margin-bottom:30px">
+Everything you need to know about Yukae™ and how it helps your server.
+</p>
 
+<div class="faq">
+
+<div class="faq-item">
+<button class="faq-question">What is Yukae™?<span>▼</span></button>
+<div class="faq-answer">
+Yukae™ is an all-in-one Discord utility bot built for server owners,
+combining moderation, automation, giveaways, and management tools.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question">Is Yukae™ free to use?<span>▼</span></button>
+<div class="faq-answer">
+Yes. Core features are free. Optional upgrades may come later,
+but essential tools stay accessible.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question">How reliable is Yukae™?<span>▼</span></button>
+<div class="faq-answer">
+Yukae™ runs on optimized infrastructure focused on uptime,
+speed, and stability.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question">What happens during downtime?<span>▼</span></button>
+<div class="faq-answer">
+Maintenance restarts may happen to improve performance and security.
+</div>
+</div>
+
+<div class="faq-item">
+<button class="faq-question">How do I get support?<span>▼</span></button>
+<div class="faq-answer">
+Join the official support server or contact the team directly.
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- Developers -->
+<section id="developers">
+<h2>Developers</h2>
+<div class="card" style="text-align:center">
+<img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg"
+style="width:120px;height:120px;border-radius:50%;margin-bottom:10px;border:2px solid cyan">
+<h3>Power_!</h3>
+<p>Experienced Discord manager & bot developer.</p>
+</div>
+</section>
+
+<!-- Support -->
+<section id="support">
+<h2>Support</h2>
+<div class="card">
+<p>Support Server: https://discord.gg/ATSCwyk9fg</p>
+<p>Email: support@yukae.bot</p>
+</div>
+</section>
+
+<footer>
+© 2026 Yukae Bot — All rights reserved
+</footer>
+
+<script>
 setTimeout(()=>{
 document.getElementById("loader").style.display="none";
 },3500);
+
+document.querySelectorAll(".faq-question").forEach(btn=>{
+btn.onclick=()=>{
+btn.parentElement.classList.toggle("active");
+};
+});
 </script>
 
 </body>
