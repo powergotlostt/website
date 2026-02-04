@@ -2,13 +2,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Yukae Dashboard</title>
-
+<title>Yukae</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{box-sizing:border-box}
-
 body{
 margin:0;
 font-family:Arial;
@@ -16,7 +13,6 @@ background:#0b0f14;
 color:white;
 }
 
-/* NAV */
 nav{
 background:#0f1720;
 padding:12px;
@@ -25,7 +21,6 @@ gap:10px;
 flex-wrap:wrap;
 position:sticky;
 top:0;
-z-index:10;
 }
 
 nav button{
@@ -35,63 +30,27 @@ color:#00eaff;
 padding:8px 12px;
 border-radius:6px;
 cursor:pointer;
-font-size:14px;
 }
 
-nav button:hover{
-background:#00eaff33;
-}
-
-/* PAGES */
 .page{
 display:none;
 padding:20px;
 }
 
-.active{
-display:block;
-}
+.active{display:block;}
 
-/* GRID */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-}
-
-/* CARD */
 .card{
 background:#101723;
 border:1px solid #00d9ff22;
 padding:15px;
 border-radius:12px;
+margin-bottom:15px;
 }
 
-/* DASHBOARD */
-.dashboard-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:15px;
-margin-bottom:20px;
-}
-
-.stat{
-background:#0f1c26;
-padding:15px;
-border-radius:10px;
-border:1px solid #00d9ff33;
-text-align:center;
-}
-
-.stat h2{
-margin:0;
-color:#00eaff;
-}
-
-/* COMMANDS */
 h3{
 cursor:pointer;
 margin:0;
+color:#00eaff;
 }
 
 ul{
@@ -127,20 +86,16 @@ color:white;
 margin-bottom:15px;
 }
 
-/* MOBILE */
 @media (max-width:600px){
-nav{
-flex-direction:column;
-}
+nav{flex-direction:column;}
 }
 </style>
-
 </head>
+
 <body>
 
 <nav>
 <button onclick="showPage('home')">Home</button>
-<button onclick="showPage('dashboard')">Dashboard</button>
 <button onclick="showPage('commands')">Commands</button>
 <button onclick="showPage('support')">Support</button>
 </nav>
@@ -149,100 +104,16 @@ flex-direction:column;
 <div id="home" class="page active">
 <h1>Yukae</h1>
 <p>All-in-one utilities bot supporting servers and perfect for server owners.</p>
-
-<div class="grid">
-<div class="card">
-<h3>Automation</h3>
-<p>Autoresponder, welcome, media & autoreact systems.</p>
-</div>
-
-<div class="card">
-<h3>Moderation</h3>
-<p>Powerful server management tools.</p>
-</div>
-
-<div class="card">
-<h3>Giveaways</h3>
-<p>Professional giveaway hosting.</p>
-</div>
-</div>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboard" class="page">
-
-<h1>Dashboard</h1>
-
-<div class="dashboard-grid">
-<div class="stat">
-<h2>500+</h2>
-<p>Users</p>
-</div>
-
-<div class="stat">
-<h2>96.5%</h2>
-<p>Uptime</p>
-</div>
-
-<div class="stat">
-<h2>24/7</h2>
-<p>Support</p>
-</div>
-
-<div class="stat">
-<h2>120K</h2>
-<p>Commands Used</p>
-</div>
-</div>
-
-<div class="card">
-<h3>Recent Activity</h3>
-<p>• Giveaway started in Server #123</p>
-<p>• 25 new members joined</p>
-<p>• Welcome system triggered</p>
-<p>• Moderation action logged</p>
-</div>
-
 </div>
 
 <!-- COMMANDS -->
 <div id="commands" class="page">
 
 <h1>Commands</h1>
-
 <input id="search" onkeyup="searchCommands()" placeholder="Search commands...">
 
-<div class="grid">
+<div id="cmdContainer"></div>
 
-<div class="card">
-<h3 onclick="toggle(this)">General ▼</h3>
-<ul>
-<li>avatar <button class="copy" onclick="copyCmd('avatar')">Copy</button></li>
-<li>serverinfo <button class="copy" onclick="copyCmd('serverinfo')">Copy</button></li>
-<li>userinfo <button class="copy" onclick="copyCmd('userinfo')">Copy</button></li>
-<li>ping <button class="copy" onclick="copyCmd('ping')">Copy</button></li>
-<li>uptime <button class="copy" onclick="copyCmd('uptime')">Copy</button></li>
-</ul>
-</div>
-
-<div class="card">
-<h3 onclick="toggle(this)">Giveaway ▼</h3>
-<ul>
-<li>giveaway start <button class="copy" onclick="copyCmd('giveaway start')">Copy</button></li>
-<li>giveaway reroll <button class="copy" onclick="copyCmd('giveaway reroll')">Copy</button></li>
-</ul>
-</div>
-
-<div class="card">
-<h3 onclick="toggle(this)">Moderation ▼</h3>
-<ul>
-<li>ban <button class="copy" onclick="copyCmd('ban')">Copy</button></li>
-<li>kick <button class="copy" onclick="copyCmd('kick')">Copy</button></li>
-<li>mute <button class="copy" onclick="copyCmd('mute')">Copy</button></li>
-</ul>
-</div>
-
-</div>
 </div>
 
 <!-- SUPPORT -->
@@ -254,14 +125,81 @@ flex-direction:column;
 
 <script>
 
-function showPage(id){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(id).classList.add('active');
+const data = {
+"General":[
+"avatar [user]","banner user [user]","banner server","servericon",
+"membercount","poll","snipe","serverinfo","userinfo [user]",
+"roleinfo <role>","botinfo","stats","boostcount","joined-at",
+"ping","vcinfo <voicechannel>","channelinfo <channel>",
+"badges [user]","invite","uptime"
+],
+"Giveaway":[
+"giveaway start","giveaway end","giveaway reroll",
+"giveaway config","giveaway list"
+],
+"Autoresponder":[
+"autoresponder","autoresponder add","autoresponder remove",
+"autoresponder list","autoresponder reset"
+],
+"Media":[
+"media","media channel add","media channel remove",
+"media channel list","media channel reset",
+"media bypass add","media bypass remove",
+"media bypass list","media bypass reset"
+],
+"Autoreact":[
+"autoreact","autoreact add","autoreact remove",
+"autoreact list","autoreact reset","autoreact channel",
+"autoreact channel add","autoreact channel remove",
+"autoreact channel list","autoreact channel reset"
+],
+"Moderation":[
+"mute <user> <time>","unmute <user>","ban <user>","unban <user>",
+"kick <user>","slowmode <time>","unslowmode",
+"roleicon <role> <icon>","steal [file]",
+"purge amount <amount>","purge all [amount]",
+"purge bots [amount]","purge embeds [amount]",
+"purge mentions [amount]","purge images [amount]",
+"purge contains <text> [amount]"
+],
+"Extra":[
+"list roles","autorole setup","autorole add <role> [human/bot]",
+"autorole remove <role>","autorole list",
+"autorole clear","autorole toggle",
+"autorole test [human/bot]","welcome",
+"welcome disable","welcome setup","welcome config"
+]
+};
+
+function buildCommands(){
+let container=document.getElementById("cmdContainer");
+container.innerHTML="";
+
+for(let category in data){
+let card=document.createElement("div");
+card.className="card";
+
+let title=document.createElement("h3");
+title.textContent=category+" ▼";
+title.onclick=()=>toggle(title);
+
+let ul=document.createElement("ul");
+
+data[category].forEach(cmd=>{
+let li=document.createElement("li");
+li.innerHTML=`${cmd} <button class="copy" onclick="copyCmd('${cmd}')">Copy</button>`;
+ul.appendChild(li);
+});
+
+card.appendChild(title);
+card.appendChild(ul);
+container.appendChild(card);
+}
 }
 
 function toggle(el){
 let ul=el.nextElementSibling;
-ul.style.display = ul.style.display==="block"?"none":"block";
+ul.style.display=ul.style.display==="block"?"none":"block";
 }
 
 function copyCmd(cmd){
@@ -271,12 +209,17 @@ alert("Copied: "+cmd);
 
 function searchCommands(){
 let input=document.getElementById("search").value.toLowerCase();
-let li=document.querySelectorAll("#commands li");
-
-li.forEach(item=>{
-item.style.display=item.textContent.toLowerCase().includes(input)?"flex":"none";
+document.querySelectorAll("#commands li").forEach(li=>{
+li.style.display=li.textContent.toLowerCase().includes(input)?"flex":"none";
 });
 }
+
+function showPage(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+buildCommands();
 
 </script>
 
