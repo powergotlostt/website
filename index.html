@@ -2,205 +2,154 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>yukae Bot</title><style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; scroll-behavior:smooth; }
-body { background:#000; color:#fff; line-height:1.6; }
+<title>Yukae Bot</title><style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+body{background:#000;color:#fff;overflow-x:hidden}
 
-nav {
-  position:sticky; top:0; background:#000;
-  padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center;
-  border-bottom:1px solid cyan; z-index:1000;
+nav{
+position:fixed;top:0;width:100%;background:#000;border-bottom:1px solid cyan;
+display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;z-index:1000
+}
+nav h2{color:cyan}
+nav a{color:#fff;margin-left:1rem;text-decoration:none;cursor:pointer}
+nav a:hover{color:cyan}
+
+.page{
+display:none;min-height:100vh;padding:7rem 2rem 3rem;
+opacity:0;transform:translateY(20px);
+transition:0.4s ease
+}
+.page.active{display:block;opacity:1;transform:translateY(0)}
+
+h1,h2{color:cyan;margin-bottom:1rem}
+
+.center{text-align:center}
+.hero img{width:140px;height:140px;border-radius:50%;border:2px solid cyan;margin-bottom:1rem}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2rem}
+.card{
+background:#0a0a0a;border:1px solid cyan;border-radius:16px;padding:1.5rem;
+box-shadow:0 0 20px rgba(0,255,255,0.15);transition:0.2s ease
+}
+.card:hover{box-shadow:0 0 25px cyan;transform:translateY(-4px)}
+
+.dropdown{cursor:pointer;font-weight:bold;color:cyan;margin:1rem 0}
+.cmd-list{display:none;margin-top:0.5rem}
+.cmd-list li{padding:0.3rem 0;border-bottom:1px solid #111}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;text-align:center}
+.stat{background:#0a0a0a;padding:2rem;border:1px solid cyan;border-radius:16px}
+.stat h3{font-size:2rem;color:cyan}
+
+.dev img{width:120px;height:120px;border-radius:50%;border:2px solid cyan;margin-bottom:1rem}
+
+footer{text-align:center;padding:2rem;color:#777;border-top:1px solid cyan;margin-top:3rem}
+
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}}
+/* animated background glow */
+body::before {
+  content:"";
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at 50% 50%, rgba(0,255,255,0.08), transparent 60%);
+  animation:glowMove 8s linear infinite;
+  z-index:-1;
+}
+@keyframes glowMove {
+  0% { transform:translateY(0); }
+  50% { transform:translateY(-40px); }
+  100% { transform:translateY(0); }
 }
 
-nav h2 { color:cyan; }
-nav a { color:#fff; text-decoration:none; margin-left:1rem; }
-nav a:hover { color:cyan; }
-
-header {
-  text-align:center; padding:6rem 2rem;
-  background:linear-gradient(135deg,#000,#001f24);
-}
-
-header img {
-  width:140px;
-  height:140px;
-  border-radius:50%;
-  border:2px solid cyan;
-  margin-bottom:1.5rem;
-  box-shadow:0 0 20px cyan;
-}
-
-header h1 { font-size:3rem; color:cyan; margin-bottom:1rem; }
-header p { max-width:700px; margin:auto; color:#cbd5f5; margin-bottom:2rem; }
-
-.buttons a, .btn {
-  display:inline-block; padding:0.8rem 1.6rem; border-radius:999px;
-  margin:0.3rem; text-decoration:none; font-weight:600;
-  border:2px solid cyan; color:cyan; transition:0.2s ease; cursor:pointer;
-  background:transparent;
-}
-.buttons a:hover, .btn:hover { background:cyan; color:#000; box-shadow:0 0 15px cyan; }
-
-.badge {
-  display:inline-block;
-  padding:8px 16px;
-  border-radius:999px;
+/* neon hover buttons */
+.buttons a:hover {
   background:cyan;
-  color:black;
-  font-weight:bold;
-  animation:pulse 1.5s infinite;
+  color:#000;
+  box-shadow:0 0 25px cyan, 0 0 50px cyan;
 }
 
-@keyframes pulse {
-  0% { box-shadow:0 0 0 0 rgba(0,255,255,0.7); }
-  70% { box-shadow:0 0 0 12px rgba(0,255,255,0); }
-  100% { box-shadow:0 0 0 0 rgba(0,255,255,0); }
+.copy-btn {
+  margin-left:8px;
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid cyan;
+  background:#000;
+  color:cyan;
+  cursor:pointer;
+  font-size:0.75rem;
+}
+.copy-btn:hover {
+  background:cyan;
+  color:#000;
 }
 
-section { max-width:1200px; margin:auto; padding:4rem 2rem; }
-h2 { color:cyan; margin-bottom:1.5rem; font-size:2rem; }
-
-.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2rem; }
-
-.card {
-  background:#0a0a0a; border:1px solid cyan;
-  border-radius:16px; padding:1.5rem;
-  box-shadow:0 0 20px rgba(0,255,255,0.15);
-  transition:0.2s ease;
-}
-.card:hover { box-shadow:0 0 25px cyan; transform:translateY(-4px); }
-
-.card h3 { color:cyan; margin-bottom:0.5rem; }
-ul { list-style:none; }
-li { padding:0.3rem 0; border-bottom:1px solid #111; font-size:0.95rem; }
-
-.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; text-align:center; }
-.stat { background:#0a0a0a; padding:2rem; border-radius:16px; border:1px solid cyan; }
-.stat h3 { font-size:2rem; color:cyan; }
-
-.dev { text-align:center; }
-.dev img { width:120px; height:120px; border-radius:50%; border:2px solid cyan; margin-bottom:1rem; }
-
-.search { margin-bottom:2rem; text-align:center; }
-.search input {
-  padding:0.8rem; width:100%; max-width:400px;
-  border-radius:999px; border:1px solid cyan;
-  background:#000; color:#fff;
-}
-
-footer { text-align:center; padding:2rem; color:#888; border-top:1px solid cyan; }
-
-@media (max-width:900px) {
-  .grid { grid-template-columns:1fr; }
-  .stats { grid-template-columns:1fr 1fr; }
-}
-@media (max-width:600px) {
-  .stats { grid-template-columns:1fr; }
-}
 </style><script>
-function searchCommands() {
-  let input = document.getElementById("cmdSearch").value.toLowerCase();
-  let cards = document.querySelectorAll("#commands .card");
-  cards.forEach(card => {
-    card.style.display = card.innerText.toLowerCase().includes(input) ? "block" : "none";
-  });
+function showPage(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
 }
-
-function copyInvite() {
-  navigator.clipboard.writeText("https://discord.com/oauth2/authorize?client_id=1467203698399903837&scope=bot");
-  alert("Invite link copied!");
+function toggleCmd(el){
+let list=el.nextElementSibling;
+list.style.display=list.style.display==='block'?'none':'block';
+}
+function copyCmd(text) {
+  navigator.clipboard.writeText(text);
+  alert("Command copied: " + text);
 }
 </script></head><body><nav>
-  <h2>yukae</h2>
-  <div>
-    <a href="#home">Home</a>
-    <a href="#features">Features</a>
-    <a href="#commands">Commands</a>
-    <a href="#stats">Stats</a>
-    <a href="#developers">Developers</a>
-    <a href="#premium">Premium</a>
-    <a href="#support">Support</a>
-  </div>
-</nav><header id="home">
-  <img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg?ex=6984b26d&is=698360ed&hm=dc48dac985631570d344fc058b52b19f05bb43fa44855d6910e0e3ae8a570abb&">
-  <h1>yukae — All-in-One Utilities Bot</h1>
-  <p>
-    A powerful all-in-one utilities bot supporting servers and perfect for server owners.
-    Built for speed, simplicity, and modern communities.
-  </p>
-  <div class="buttons">
-    <a href="https://discord.com/oauth2/authorize?client_id=1467203698399903837&scope=bot">Invite Bot</a>
-    <button onclick="copyInvite()" class="btn">Copy Invite</button>
-    <span class="badge">Bot Status: Online</span>
-  </div>
-</header><section id="features">
-  <h2>Bot Features</h2>
-  <div class="grid">
-    <div class="card"><h3>Utilities</h3><p>Full server utility toolkit for owners and admins.</p></div>
-    <div class="card"><h3>Giveaways</h3><p>Advanced giveaway system with rerolls and configs.</p></div>
-    <div class="card"><h3>Automation</h3><p>Autoresponder, autoreact and media systems.</p></div>
-    <div class="card"><h3>Moderation</h3><p>Clean moderation without heavy antinuke.</p></div>
-  </div>
-</section><section id="commands">
-  <h2>Command Categories</h2>
-  <div class="search">
-    <input id="cmdSearch" onkeyup="searchCommands()" placeholder="Search commands...">
-  </div>  <div class="grid"><div class="card"><h3>General</h3><ul>
-<li>avatar</li><li>banner user</li><li>banner server</li><li>servericon</li>
-<li>membercount</li><li>poll</li><li>snipe</li><li>serverinfo</li>
-<li>userinfo</li><li>roleinfo</li><li>botinfo</li><li>stats</li>
-<li>boostcount</li><li>joined-at</li><li>ping</li><li>vcinfo</li>
-<li>channelinfo</li><li>badges</li><li>invite</li><li>uptime</li>
-</ul></div><div class="card"><h3>Giveaway</h3><ul>
-<li>giveaway start</li><li>giveaway end</li>
-<li>giveaway reroll</li><li>giveaway config</li>
-<li>giveaway list</li>
-</ul></div><div class="card"><h3>Autoresponder</h3><ul>
-<li>autoresponder add/remove/list/reset</li>
-</ul></div><div class="card"><h3>Media</h3><ul>
-<li>media channel system</li>
-<li>media bypass system</li>
-</ul></div><div class="card"><h3>Autoreact</h3><ul>
-<li>autoreact add/remove/list/reset</li>
-<li>autoreact channel system</li>
-</ul></div><div class="card"><h3>Moderation</h3><ul>
-<li>mute / unmute</li><li>ban / unban</li>
-<li>kick</li><li>slowmode</li>
-<li>purge system</li>
-</ul></div><div class="card"><h3>Extra</h3><ul>
-<li>autorole system</li>
-<li>welcome system</li>
-<li>list roles</li>
-</ul></div>  </div>
-</section><section id="stats">
-  <h2>Bot Stats</h2>
-  <div class="stats">
-    <div class="stat"><h3>500+</h3><p>Users</p></div>
-    <div class="stat"><h3>24/7</h3><p>Support</p></div>
-    <div class="stat"><h3>96.5%</h3><p>Uptime</p></div>
-  </div>
-</section><section id="developers">
-  <h2>Developers</h2>
-  <div class="card dev">
-    <img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468630056371753146/ca75ca1ab8d338ed603861f05833fa10.jpg?ex=6984b7d3&is=69836653&hm=9f94898876db35b53c7ef239ad897ccce2acabec52c3bbe32a1f59ed0c9a6588&">
-    <h3>Power_!</h3>
-    <p>Experienced Discord manager with 3+ years experience supporting communities.</p>
-  </div>
-</section><section id="premium">
-  <h2>Premium</h2>
-  <div class="card">
-    <p>
-      Upgrade to yukae Premium to unlock advanced tools,
-      exclusive commands, priority updates, and dedicated 24/7 support.
-    </p>
-  </div>
-</section><section id="support">
-  <h2>Support</h2>
-  <div class="card">
-    <a href="https://discord.gg/ATSCwyk9fg" class="btn">Join Support Server</a>
-    <p>Email: support@example.com</p>
-  </div>
+<h2>Yukae</h2>
+<div>
+<a onclick="showPage('home')">Home</a>
+<a onclick="showPage('commands')">Commands</a>
+<a onclick="showPage('stats')">Stats</a>
+<a onclick="showPage('dev')">Developers</a>
+<a onclick="showPage('support')">Support</a>
+</div>
+</nav><!-- HOME --><section id="home" class="page active">
+<div class="center hero">
+<img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg">
+<h1>Yukae — All in One Utilities Bot</h1>
+<p>Perfect for server owners. Lightweight utilities, smart moderation and modern community tools.</p>
+</div>
+</section><!-- COMMANDS --><section id="commands" class="page">
+<h2>Command Categories</h2>
+<ul>
+<li class="dropdown" onclick="toggleCmd(this)">General</li>
+<ul class="cmd-list">
+<li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li>
+</ul><li class="dropdown" onclick="toggleCmd(this)">Giveaway</li>
+<ul class="cmd-list">
+<li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li>
+</ul><li class="dropdown" onclick="toggleCmd(this)">Moderation</li>
+<ul class="cmd-list">
+<li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li>
+</ul><li class="dropdown" onclick="toggleCmd(this)">Automation</li>
+<ul class="cmd-list">
+<li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li><li>$1 <button class="copy-btn" onclick="copyCmd('$1')">copy</button></li>
+</ul>
+</ul>
+</section><!-- STATS --><section id="stats" class="page">
+<h2>Bot Stats</h2>
+<div class="stats">
+<div class="stat"><h3>500+</h3><p>Users</p></div>
+<div class="stat"><h3>24/7</h3><p>Support</p></div>
+<div class="stat"><h3>96.5%</h3><p>Uptime</p></div>
+</div>
+</section><!-- DEVELOPERS --><section id="dev" class="page">
+<h2>Developers</h2>
+<div class="card dev center">
+<img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg">
+<h3>Power_!</h3>
+<p>Experienced Discord manager with 3+ years supporting communities.</p>
+</div>
+</section><!-- SUPPORT --><section id="support" class="page">
+<h2>Support</h2>
+<div class="card center">
+<p>Support Server:</p>
+<p>https://discord.gg/ATSCwyk9fg</p>
+</div>
 </section><footer>
-  © 2026 yukae Bot — All rights reserved
+© 2026 Yukae Bot
 </footer></body>
 </html>
