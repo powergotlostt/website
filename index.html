@@ -1,107 +1,267 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
+<title>Yukae Dashboard</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yukae Bot</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;color:white}
-body{background:black;overflow-x:hidden}
+*{box-sizing:border-box}
 
-/* Loading */
-#loader{
-position:fixed;inset:0;background:black;
-display:flex;align-items:center;justify-content:center;
-z-index:9999;font-size:24px;color:cyan;
-animation:fadeOut 1s 1.5s forwards;
+body{
+margin:0;
+font-family:Arial;
+background:#0b0f14;
+color:white;
 }
-@keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
-/* Glow background */
-body::before{
-content:"";position:fixed;inset:-50%;
-background:radial-gradient(circle,rgba(0,255,255,.15),transparent 60%);
-animation:glow 6s linear infinite;
-z-index:-1;
-}
-@keyframes glow{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-
-/* Nav */
+/* NAV */
 nav{
-position:fixed;top:0;width:100%;background:black;
-padding:15px 25px;border-bottom:1px solid cyan;
-display:flex;justify-content:space-between;z-index:1000;
-}
-nav a{margin-left:15px;text-decoration:none}
-nav a:hover{color:cyan}
-
-/* Pages */
-.page{display:none;padding:120px 20px 60px;min-height:100vh;animation:fade .4s}
-.active{display:block}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-
-h1,h2{text-align:center;color:cyan;margin-bottom:15px}
-
-.hero-img{
-width:140px;height:140px;border-radius:50%;
-border:2px solid cyan;display:block;margin:0 auto 15px
+background:#0f1720;
+padding:12px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+position:sticky;
+top:0;
+z-index:10;
 }
 
-/* Grid */
+nav button{
+background:#00d9ff22;
+border:1px solid #00d9ff55;
+color:#00eaff;
+padding:8px 12px;
+border-radius:6px;
+cursor:pointer;
+font-size:14px;
+}
+
+nav button:hover{
+background:#00eaff33;
+}
+
+/* PAGES */
+.page{
+display:none;
+padding:20px;
+}
+
+.active{
+display:block;
+}
+
+/* GRID */
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;max-width:1100px;margin:auto
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
 }
 
+/* CARD */
 .card{
-background:#050505;
-border:1px solid cyan;
-padding:20px;border-radius:14px;
-box-shadow:0 0 20px rgba(0,255,255,.2);
+background:#101723;
+border:1px solid #00d9ff22;
+padding:15px;
+border-radius:12px;
 }
 
-.card h3{color:cyan;margin-bottom:8px;cursor:pointer}
-
-/* Commands */
-ul{list-style:none}
-li{padding:6px 0;border-bottom:1px solid #111}
-
-button{
-background:black;border:1px solid cyan;color:cyan;
-padding:4px 10px;border-radius:8px;
-cursor:pointer;margin-left:6px;
+/* DASHBOARD */
+.dashboard-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-bottom:20px;
 }
-button:hover{background:cyan;color:black}
 
-/* Stats */
-.stats{
-display:grid;grid-template-columns:repeat(3,1fr);
-gap:20px;max-width:800px;margin:auto;text-align:center
+.stat{
+background:#0f1c26;
+padding:15px;
+border-radius:10px;
+border:1px solid #00d9ff33;
+text-align:center;
 }
-.stat{border:1px solid cyan;padding:25px;border-radius:14px}
 
-/* Search */
-.search{text-align:center;margin-bottom:25px}
+.stat h2{
+margin:0;
+color:#00eaff;
+}
+
+/* COMMANDS */
+h3{
+cursor:pointer;
+margin:0;
+}
+
+ul{
+list-style:none;
+padding:0;
+margin-top:10px;
+display:none;
+}
+
+li{
+padding:6px 0;
+display:flex;
+justify-content:space-between;
+font-size:14px;
+}
+
+.copy{
+background:#00eaff33;
+border:none;
+color:#00eaff;
+padding:3px 7px;
+border-radius:4px;
+cursor:pointer;
+}
+
 input{
-padding:10px;border-radius:999px;
-border:1px solid cyan;background:black;
-width:320px;max-width:90%;
+width:100%;
+padding:10px;
+border-radius:6px;
+border:none;
+background:#0f1c26;
+color:white;
+margin-bottom:15px;
 }
 
-footer{text-align:center;padding:20px;border-top:1px solid cyan;color:#888}
-
-/* Mobile */
-@media(max-width:700px){
-.stats{grid-template-columns:1fr}
+/* MOBILE */
+@media (max-width:600px){
+nav{
+flex-direction:column;
+}
 }
 </style>
 
+</head>
+<body>
+
+<nav>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('dashboard')">Dashboard</button>
+<button onclick="showPage('commands')">Commands</button>
+<button onclick="showPage('support')">Support</button>
+</nav>
+
+<!-- HOME -->
+<div id="home" class="page active">
+<h1>Yukae</h1>
+<p>All-in-one utilities bot supporting servers and perfect for server owners.</p>
+
+<div class="grid">
+<div class="card">
+<h3>Automation</h3>
+<p>Autoresponder, welcome, media & autoreact systems.</p>
+</div>
+
+<div class="card">
+<h3>Moderation</h3>
+<p>Powerful server management tools.</p>
+</div>
+
+<div class="card">
+<h3>Giveaways</h3>
+<p>Professional giveaway hosting.</p>
+</div>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="page">
+
+<h1>Dashboard</h1>
+
+<div class="dashboard-grid">
+<div class="stat">
+<h2>500+</h2>
+<p>Users</p>
+</div>
+
+<div class="stat">
+<h2>96.5%</h2>
+<p>Uptime</p>
+</div>
+
+<div class="stat">
+<h2>24/7</h2>
+<p>Support</p>
+</div>
+
+<div class="stat">
+<h2>120K</h2>
+<p>Commands Used</p>
+</div>
+</div>
+
+<div class="card">
+<h3>Recent Activity</h3>
+<p>• Giveaway started in Server #123</p>
+<p>• 25 new members joined</p>
+<p>• Welcome system triggered</p>
+<p>• Moderation action logged</p>
+</div>
+
+</div>
+
+<!-- COMMANDS -->
+<div id="commands" class="page">
+
+<h1>Commands</h1>
+
+<input id="search" onkeyup="searchCommands()" placeholder="Search commands...">
+
+<div class="grid">
+
+<div class="card">
+<h3 onclick="toggle(this)">General ▼</h3>
+<ul>
+<li>avatar <button class="copy" onclick="copyCmd('avatar')">Copy</button></li>
+<li>serverinfo <button class="copy" onclick="copyCmd('serverinfo')">Copy</button></li>
+<li>userinfo <button class="copy" onclick="copyCmd('userinfo')">Copy</button></li>
+<li>ping <button class="copy" onclick="copyCmd('ping')">Copy</button></li>
+<li>uptime <button class="copy" onclick="copyCmd('uptime')">Copy</button></li>
+</ul>
+</div>
+
+<div class="card">
+<h3 onclick="toggle(this)">Giveaway ▼</h3>
+<ul>
+<li>giveaway start <button class="copy" onclick="copyCmd('giveaway start')">Copy</button></li>
+<li>giveaway reroll <button class="copy" onclick="copyCmd('giveaway reroll')">Copy</button></li>
+</ul>
+</div>
+
+<div class="card">
+<h3 onclick="toggle(this)">Moderation ▼</h3>
+<ul>
+<li>ban <button class="copy" onclick="copyCmd('ban')">Copy</button></li>
+<li>kick <button class="copy" onclick="copyCmd('kick')">Copy</button></li>
+<li>mute <button class="copy" onclick="copyCmd('mute')">Copy</button></li>
+</ul>
+</div>
+
+</div>
+</div>
+
+<!-- SUPPORT -->
+<div id="support" class="page">
+<h1>Support</h1>
+<p>Support Server:</p>
+<p style="color:#00eaff">https://discord.gg/ATSCwyk9fg</p>
+</div>
+
 <script>
+
 function showPage(id){
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-document.getElementById(id).classList.add("active");
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+function toggle(el){
+let ul=el.nextElementSibling;
+ul.style.display = ul.style.display==="block"?"none":"block";
 }
 
 function copyCmd(cmd){
@@ -111,117 +271,14 @@ alert("Copied: "+cmd);
 
 function searchCommands(){
 let input=document.getElementById("search").value.toLowerCase();
-document.querySelectorAll("#commands .card").forEach(card=>{
-card.style.display=card.innerText.toLowerCase().includes(input)?"block":"none";
+let li=document.querySelectorAll("#commands li");
+
+li.forEach(item=>{
+item.style.display=item.textContent.toLowerCase().includes(input)?"flex":"none";
 });
 }
 
-function toggle(el){
-let ul=el.nextElementSibling;
-ul.style.display=ul.style.display==="none"?"block":"none";
-}
 </script>
-</head>
-
-<body>
-
-<div id="loader">Loading Yukae…</div>
-
-<nav>
-<div style="color:cyan;font-weight:bold">Yukae</div>
-<div>
-<a onclick="showPage('home')">Home</a>
-<a onclick="showPage('commands')">Commands</a>
-<a onclick="showPage('stats')">Stats</a>
-<a onclick="showPage('developers')">Developers</a>
-<a onclick="showPage('support')">Support</a>
-</div>
-</nav>
-
-<!-- HOME -->
-<div id="home" class="page active">
-<img class="hero-img" src="https://placehold.co/140x140/cyan/black?text=Yukae">
-<h1>Yukae — All In One Bot</h1>
-<p style="text-align:center;max-width:700px;margin:auto">
-Powerful utilities bot supporting servers and perfect for server owners.
-Fast, modern, and built for growing communities.
-</p>
-</div>
-
-<!-- COMMANDS -->
-<div id="commands" class="page">
-<h2>Commands</h2>
-
-<div class="search">
-<input id="search" onkeyup="searchCommands()" placeholder="Search commands...">
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h3 onclick="toggle(this)">General ▼</h3>
-<ul>
-<li>avatar <button onclick="copyCmd('avatar')">Copy</button></li>
-<li>serverinfo <button onclick="copyCmd('serverinfo')">Copy</button></li>
-<li>userinfo <button onclick="copyCmd('userinfo')">Copy</button></li>
-<li>botinfo <button onclick="copyCmd('botinfo')">Copy</button></li>
-<li>ping <button onclick="copyCmd('ping')">Copy</button></li>
-<li>uptime <button onclick="copyCmd('uptime')">Copy</button></li>
-</ul>
-</div>
-
-<div class="card">
-<h3 onclick="toggle(this)">Moderation ▼</h3>
-<ul>
-<li>mute <button onclick="copyCmd('mute')">Copy</button></li>
-<li>ban <button onclick="copyCmd('ban')">Copy</button></li>
-<li>kick <button onclick="copyCmd('kick')">Copy</button></li>
-<li>purge <button onclick="copyCmd('purge')">Copy</button></li>
-</ul>
-</div>
-
-<div class="card">
-<h3 onclick="toggle(this)">Giveaway ▼</h3>
-<ul>
-<li>giveaway start <button onclick="copyCmd('giveaway start')">Copy</button></li>
-<li>giveaway end <button onclick="copyCmd('giveaway end')">Copy</button></li>
-<li>giveaway reroll <button onclick="copyCmd('giveaway reroll')">Copy</button></li>
-</ul>
-</div>
-
-</div>
-</div>
-
-<!-- STATS -->
-<div id="stats" class="page">
-<h2>Bot Stats</h2>
-<div class="stats">
-<div class="stat"><h3>500+</h3><p>Users</p></div>
-<div class="stat"><h3>24/7</h3><p>Support</p></div>
-<div class="stat"><h3>96.5%</h3><p>Uptime</p></div>
-</div>
-</div>
-
-<!-- DEVELOPERS -->
-<div id="developers" class="page">
-<h2>Developers</h2>
-<div class="card" style="max-width:400px;margin:auto;text-align:center">
-<img class="hero-img" src="https://placehold.co/140x140/cyan/black?text=Dev">
-<h3>Power_!</h3>
-<p>Experienced Discord manager with 3+ years experience supporting communities.</p>
-</div>
-</div>
-
-<!-- SUPPORT -->
-<div id="support" class="page">
-<h2>Support</h2>
-<div class="card" style="max-width:500px;margin:auto;text-align:center">
-<p>Support Server:</p>
-<p style="color:cyan">https://discord.gg/ATSCwyk9fg</p>
-</div>
-</div>
-
-<footer>© 2026 Yukae Bot</footer>
 
 </body>
 </html>
