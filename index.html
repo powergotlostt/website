@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>yukae Bot</title><style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; scroll-behavior:smooth; }
+body { background:#000; color:#fff; line-height:1.6; }
+
+nav {
+  position:sticky; top:0; background:#000;
+  padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center;
+  border-bottom:1px solid cyan; z-index:1000;
+}
+
+nav h2 { color:cyan; }
+nav a { color:#fff; text-decoration:none; margin-left:1rem; }
+nav a:hover { color:cyan; }
+
+header {
+  text-align:center; padding:6rem 2rem;
+  background:linear-gradient(135deg,#000,#001f24);
+}
+
+header h1 { font-size:3rem; color:cyan; margin-bottom:1rem; }
+header p { max-width:700px; margin:auto; color:#cbd5f5; margin-bottom:2rem; }
+
+.buttons a, .btn {
+  display:inline-block; padding:0.8rem 1.6rem; border-radius:999px;
+  margin:0.3rem; text-decoration:none; font-weight:600;
+  border:2px solid cyan; color:cyan; transition:0.2s ease; cursor:pointer;
+  background:transparent;
+}
+.buttons a:hover, .btn:hover { background:cyan; color:#000; box-shadow:0 0 15px cyan; }
+
+.badge {
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:999px;
+  background:cyan;
+  color:black;
+  font-weight:bold;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow:0 0 0 0 rgba(0,255,255,0.7); }
+  70% { box-shadow:0 0 0 12px rgba(0,255,255,0); }
+  100% { box-shadow:0 0 0 0 rgba(0,255,255,0); }
+}
+
+section { max-width:1100px; margin:auto; padding:4rem 2rem; }
+h2 { color:cyan; margin-bottom:1.5rem; font-size:2rem; }
+
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+
+.card {
+  background:#0a0a0a; border:1px solid cyan;
+  border-radius:16px; padding:1.5rem;
+  box-shadow:0 0 20px rgba(0,255,255,0.15);
+  transition:0.2s ease;
+}
+.card:hover { box-shadow:0 0 25px cyan; transform:translateY(-4px); }
+
+.card h3 { color:cyan; margin-bottom:0.5rem; }
+ul { list-style:none; }
+li { padding:0.4rem 0; border-bottom:1px solid #111; }
+
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; text-align:center; }
+.stat { background:#0a0a0a; padding:2rem; border-radius:16px; border:1px solid cyan; }
+.stat h3 { font-size:2rem; color:cyan; }
+
+.dev { text-align:center; }
+.dev img { width:120px; height:120px; border-radius:50%; border:2px solid cyan; margin-bottom:1rem; }
+
+.search { margin-bottom:2rem; text-align:center; }
+.search input {
+  padding:0.8rem; width:100%; max-width:400px;
+  border-radius:999px; border:1px solid cyan;
+  background:#000; color:#fff;
+}
+
+footer { text-align:center; padding:2rem; color:#888; border-top:1px solid cyan; }
+
+@media (max-width:900px) {
+  .grid { grid-template-columns:repeat(2,1fr); }
+  .stats { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:600px) {
+  .grid { grid-template-columns:1fr; }
+  .stats { grid-template-columns:1fr; }
+}
+</style><script>
+function searchCommands() {
+  let input = document.getElementById("cmdSearch").value.toLowerCase();
+  let cards = document.querySelectorAll("#commands .card");
+  cards.forEach(card => {
+    card.style.display = card.innerText.toLowerCase().includes(input) ? "block" : "none";
+  });
+}
+
+function copyInvite() {
+  navigator.clipboard.writeText("https://discord.com/oauth2/authorize?client_id=YOUR_BOT_ID&scope=bot");
+  alert("Invite link copied!");
+}
+</script></head><body><nav>
+  <h2>yukae</h2>
+  <div>
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <a href="#commands">Commands</a>
+    <a href="#stats">Stats</a>
+    <a href="#developers">Developers</a>
+    <a href="#premium">Premium</a>
+    <a href="#support">Support</a>
+  </div>
+</nav><header id="home">
+  <h1>yukae — All-in-One Utilities Bot</h1>
+  <p>
+    A powerful all-in-one utilities bot supporting servers and perfect for server owners.
+    Built for speed, simplicity, and modern communities.
+  </p>
+  <div class="buttons">
+    <a href="https://discord.com/oauth2/authorize?client_id=YOUR_BOT_ID&scope=bot">Invite Bot</a>
+    <button onclick="copyInvite()" class="btn">Copy Invite</button>
+    <span class="badge" id="status">Bot Status: Online</span>
+  </div>
+</header><section id="features">
+  <h2>Bot Features</h2>
+  <div class="grid">
+    <div class="card"><h3>Utility Core</h3><p>Essential server management tools.</p></div>
+    <div class="card"><h3>Minimal Automod</h3><p>Lightweight moderation without antinuke.</p></div>
+    <div class="card"><h3>Performance</h3><p>Optimized uptime and fast responses.</p></div>
+  </div>
+</section><section id="commands">
+  <h2>Command Categories</h2>
+  <div class="search">
+    <input id="cmdSearch" onkeyup="searchCommands()" placeholder="Search commands...">
+  </div>
+  <div class="grid"><div class="card">
+  <h3>Utility</h3>
+  <ul>
+    <li>/userinfo</li>
+    <li>/serverinfo</li>
+    <li>/avatar</li>
+    <li>/remind</li>
+    <li>/role add/remove</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Moderation</h3>
+  <ul>
+    <li>/kick</li>
+    <li>/ban</li>
+    <li>/warn</li>
+    <li>/mute</li>
+    <li>/clear</li>
+  </ul>
+</div>
+
+  </div>
+</section><section id="stats">
+  <h2>Bot Stats</h2>
+  <div class="stats">
+    <div class="stat"><h3>500+</h3><p>Users</p></div>
+    <div class="stat"><h3>24/7</h3><p>Support</p></div>
+    <div class="stat"><h3>96.5%</h3><p>Uptime</p></div>
+  </div>
+</section><section id="developers">
+  <h2>Developers</h2>
+  <div class="card dev">
+    <img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg">
+    <h3>Power_!</h3>
+    <p>Experienced Discord manager with 3+ years experience supporting communities.</p>
+  </div>
+</section><section id="premium">
+  <h2>Premium</h2>
+  <div class="card">
+    <p>
+      Upgrade to yukae Premium to unlock advanced moderation tools,
+      exclusive utility commands, priority updates, and dedicated 24/7 priority support.
+      Premium servers receive faster performance allocation and early access to new features.
+    </p>
+  </div>
+</section><section id="support">
+  <h2>Support</h2>
+  <div class="card">
+    <a href="https://discord.gg/ATSCwyk9fg" class="btn">Join Support Server</a>
+    <p>Email: support@example.com</p>
+  </div>
+</section><footer>
+  © 2026 yukae Bot — All rights reserved
+</footer></body>
+  </html>
