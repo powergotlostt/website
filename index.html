@@ -21,6 +21,15 @@ header {
   background:linear-gradient(135deg,#000,#001f24);
 }
 
+header img {
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  border:2px solid cyan;
+  margin-bottom:1.5rem;
+  box-shadow:0 0 20px cyan;
+}
+
 header h1 { font-size:3rem; color:cyan; margin-bottom:1rem; }
 header p { max-width:700px; margin:auto; color:#cbd5f5; margin-bottom:2rem; }
 
@@ -48,10 +57,10 @@ header p { max-width:700px; margin:auto; color:#cbd5f5; margin-bottom:2rem; }
   100% { box-shadow:0 0 0 0 rgba(0,255,255,0); }
 }
 
-section { max-width:1100px; margin:auto; padding:4rem 2rem; }
+section { max-width:1200px; margin:auto; padding:4rem 2rem; }
 h2 { color:cyan; margin-bottom:1.5rem; font-size:2rem; }
 
-.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2rem; }
 
 .card {
   background:#0a0a0a; border:1px solid cyan;
@@ -63,7 +72,7 @@ h2 { color:cyan; margin-bottom:1.5rem; font-size:2rem; }
 
 .card h3 { color:cyan; margin-bottom:0.5rem; }
 ul { list-style:none; }
-li { padding:0.4rem 0; border-bottom:1px solid #111; }
+li { padding:0.3rem 0; border-bottom:1px solid #111; font-size:0.95rem; }
 
 .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; text-align:center; }
 .stat { background:#0a0a0a; padding:2rem; border-radius:16px; border:1px solid cyan; }
@@ -82,11 +91,10 @@ li { padding:0.4rem 0; border-bottom:1px solid #111; }
 footer { text-align:center; padding:2rem; color:#888; border-top:1px solid cyan; }
 
 @media (max-width:900px) {
-  .grid { grid-template-columns:repeat(2,1fr); }
+  .grid { grid-template-columns:1fr; }
   .stats { grid-template-columns:1fr 1fr; }
 }
 @media (max-width:600px) {
-  .grid { grid-template-columns:1fr; }
   .stats { grid-template-columns:1fr; }
 }
 </style><script>
@@ -114,6 +122,7 @@ function copyInvite() {
     <a href="#support">Support</a>
   </div>
 </nav><header id="home">
+  <img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg">
   <h1>yukae — All-in-One Utilities Bot</h1>
   <p>
     A powerful all-in-one utilities bot supporting servers and perfect for server owners.
@@ -122,43 +131,47 @@ function copyInvite() {
   <div class="buttons">
     <a href="https://discord.com/oauth2/authorize?client_id=YOUR_BOT_ID&scope=bot">Invite Bot</a>
     <button onclick="copyInvite()" class="btn">Copy Invite</button>
-    <span class="badge" id="status">Bot Status: Online</span>
+    <span class="badge">Bot Status: Online</span>
   </div>
 </header><section id="features">
   <h2>Bot Features</h2>
   <div class="grid">
-    <div class="card"><h3>Utility Core</h3><p>Essential server management tools.</p></div>
-    <div class="card"><h3>Minimal Automod</h3><p>Lightweight moderation without antinuke.</p></div>
-    <div class="card"><h3>Performance</h3><p>Optimized uptime and fast responses.</p></div>
+    <div class="card"><h3>Utilities</h3><p>Full server utility toolkit for owners and admins.</p></div>
+    <div class="card"><h3>Giveaways</h3><p>Advanced giveaway system with rerolls and configs.</p></div>
+    <div class="card"><h3>Automation</h3><p>Autoresponder, autoreact and media systems.</p></div>
+    <div class="card"><h3>Moderation</h3><p>Clean moderation without heavy antinuke.</p></div>
   </div>
 </section><section id="commands">
   <h2>Command Categories</h2>
   <div class="search">
     <input id="cmdSearch" onkeyup="searchCommands()" placeholder="Search commands...">
-  </div>
-  <div class="grid"><div class="card">
-  <h3>Utility</h3>
-  <ul>
-    <li>/userinfo</li>
-    <li>/serverinfo</li>
-    <li>/avatar</li>
-    <li>/remind</li>
-    <li>/role add/remove</li>
-  </ul>
-</div>
-
-<div class="card">
-  <h3>Moderation</h3>
-  <ul>
-    <li>/kick</li>
-    <li>/ban</li>
-    <li>/warn</li>
-    <li>/mute</li>
-    <li>/clear</li>
-  </ul>
-</div>
-
-  </div>
+  </div>  <div class="grid"><div class="card"><h3>General</h3><ul>
+<li>avatar</li><li>banner user</li><li>banner server</li><li>servericon</li>
+<li>membercount</li><li>poll</li><li>snipe</li><li>serverinfo</li>
+<li>userinfo</li><li>roleinfo</li><li>botinfo</li><li>stats</li>
+<li>boostcount</li><li>joined-at</li><li>ping</li><li>vcinfo</li>
+<li>channelinfo</li><li>badges</li><li>invite</li><li>uptime</li>
+</ul></div><div class="card"><h3>Giveaway</h3><ul>
+<li>giveaway start</li><li>giveaway end</li>
+<li>giveaway reroll</li><li>giveaway config</li>
+<li>giveaway list</li>
+</ul></div><div class="card"><h3>Autoresponder</h3><ul>
+<li>autoresponder add/remove/list/reset</li>
+</ul></div><div class="card"><h3>Media</h3><ul>
+<li>media channel system</li>
+<li>media bypass system</li>
+</ul></div><div class="card"><h3>Autoreact</h3><ul>
+<li>autoreact add/remove/list/reset</li>
+<li>autoreact channel system</li>
+</ul></div><div class="card"><h3>Moderation</h3><ul>
+<li>mute / unmute</li><li>ban / unban</li>
+<li>kick</li><li>slowmode</li>
+<li>purge system</li>
+</ul></div><div class="card"><h3>Extra</h3><ul>
+<li>autorole system</li>
+<li>welcome system</li>
+<li>list roles</li>
+</ul></div>  </div>
 </section><section id="stats">
   <h2>Bot Stats</h2>
   <div class="stats">
@@ -177,9 +190,8 @@ function copyInvite() {
   <h2>Premium</h2>
   <div class="card">
     <p>
-      Upgrade to yukae Premium to unlock advanced moderation tools,
-      exclusive utility commands, priority updates, and dedicated 24/7 priority support.
-      Premium servers receive faster performance allocation and early access to new features.
+      Upgrade to yukae Premium to unlock advanced tools,
+      exclusive commands, priority updates, and dedicated 24/7 support.
     </p>
   </div>
 </section><section id="support">
@@ -191,4 +203,4 @@ function copyInvite() {
 </section><footer>
   © 2026 yukae Bot — All rights reserved
 </footer></body>
-  </html>
+</html>
