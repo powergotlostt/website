@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Yukae Bot</title>
+<title>Yukae</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif;scroll-behavior:smooth}
-body{background:#020617;color:#fff}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+body{background:#000;color:#fff}
 
-/* Loader */
+/* LOADER */
 #loader{
-position:fixed;inset:0;background:#020617;
+position:fixed;inset:0;background:#000;
 display:flex;flex-direction:column;
 align-items:center;justify-content:center;
 z-index:9999;
@@ -19,52 +19,71 @@ animation:fadeOut 1s ease forwards;
 animation-delay:2.5s;
 }
 .logo{width:140px;height:140px;border-radius:20px;
-box-shadow:0 0 25px cyan;
+box-shadow:0 0 30px cyan;
 animation:pulse 1.6s infinite alternate}
 #loader h1{color:cyan;margin-top:10px;font-size:32px}
 #loader p{opacity:.7}
-@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.08)}}
+@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.1)}}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 
-/* Navbar */
+/* NAV */
 nav{
-position:sticky;top:0;background:#000;
+background:#000;
+border-bottom:2px solid cyan;
 padding:15px 25px;
-display:flex;justify-content:space-between;
-border-bottom:1px solid cyan;
-z-index:1000
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;top:0;z-index:1000
 }
 nav h2{color:cyan}
-nav a{color:#fff;text-decoration:none;margin-left:15px}
-nav a:hover{color:cyan}
+nav button{
+background:none;border:none;
+color:#fff;font-size:15px;
+margin-left:15px;
+cursor:pointer;
+}
+nav button:hover{color:cyan}
 
-/* Sections */
-section{max-width:1000px;margin:auto;padding:80px 20px}
+/* PAGES */
+.page{
+display:none;
+min-height:calc(100vh - 70px);
+padding:60px 20px;
+max-width:1000px;
+margin:auto;
+animation:fade .3s ease;
+}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+
 h1,h2{color:cyan;margin-bottom:20px}
-p{opacity:.85}
+p{opacity:.9;line-height:1.6}
 
+/* DIVIDER */
+.divider{
+height:1px;
+background:linear-gradient(90deg,transparent,cyan,transparent);
+margin:30px 0;
+}
+
+/* CARD */
 .card{
-background:#0a0a0a;
+background:#050505;
 border:1px solid cyan;
 border-radius:16px;
 padding:20px;
 box-shadow:0 0 15px rgba(0,255,255,.15);
-transition:.2s;
 }
-.card:hover{box-shadow:0 0 20px cyan;transform:translateY(-4px)}
-
-footer{text-align:center;padding:30px;border-top:1px solid cyan;color:#777}
 
 /* FAQ */
-.faq{max-width:800px;margin:auto}
 .faq-item{margin-bottom:12px}
 .faq-question{
 width:100%;
-background:#0a0a0a;
+background:#050505;
 border:1px solid cyan;
 color:#fff;
 padding:15px;
-font-size:16px;
 border-radius:12px;
 display:flex;
 justify-content:space-between;
@@ -73,127 +92,132 @@ cursor:pointer;
 .faq-answer{
 max-height:0;
 overflow:hidden;
-background:#050505;
 padding:0 15px;
-border:1px solid cyan;
-border-top:none;
-border-radius:0 0 12px 12px;
 transition:max-height .3s ease,padding .3s ease;
+border-left:1px solid cyan;
+border-right:1px solid cyan;
+border-bottom:1px solid cyan;
+border-radius:0 0 12px 12px;
 }
 .faq-item.active .faq-answer{
 max-height:220px;
 padding:15px;
 }
 
-/* Responsive */
+footer{
+text-align:center;
+padding:25px;
+border-top:1px solid cyan;
+color:#777;
+}
+
+/* MOBILE */
 @media(max-width:700px){
 nav{flex-direction:column;align-items:flex-start}
+nav div{margin-top:10px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- Loader -->
+<!-- LOADER -->
 <div id="loader">
 <img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg" class="logo">
 <h1>Yukae</h1>
 <p>the only bot you need</p>
 </div>
 
-<!-- Navigation -->
+<!-- NAV -->
 <nav>
 <h2>Yukae</h2>
 <div>
-<a href="#home">Home</a>
-<a href="#faq">FAQ</a>
-<a href="#developers">Developers</a>
-<a href="#support">Support</a>
+<button onclick="showPage('home')">Home</button>
+<button onclick="showPage('faq')">FAQ</button>
+<button onclick="showPage('developers')">Developers</button>
+<button onclick="showPage('support')">Support</button>
 </div>
 </nav>
 
-<!-- Home -->
-<section id="home">
-<h1>Yukae — All in One Utilities Bot</h1>
+<!-- HOME PAGE -->
+<section id="home" class="page active">
+<h1>All-in-One Utilities Bot</h1>
 <p>
-The perfect Discord bot for server owners. Utilities, moderation,
-automation, and management tools combined into one clean system.
-Built for performance, simplicity, and modern communities.
+Yukae is built for server owners who want everything in one place.
+Moderation, automation, giveaways, and management tools combined
+into a modern system designed for fast growing communities.
 </p>
+
+<div class="divider"></div>
+
+<div class="card">
+<h2>Why Yukae?</h2>
+<p>
+Clean design. Fast response. Powerful tools.
+No clutter, no unnecessary complexity —
+just a bot that works.
+</p>
+</div>
 </section>
 
-<!-- FAQ -->
-<section id="faq">
-<h1>Yukae™ – Frequently Asked Questions</h1>
-<p style="margin-bottom:30px">
-Everything you need to know about Yukae™ and how it helps your server.
-</p>
-
-<div class="faq">
+<!-- FAQ PAGE -->
+<section id="faq" class="page">
+<h1>Frequently Asked Questions</h1>
 
 <div class="faq-item">
 <button class="faq-question">What is Yukae™?<span>▼</span></button>
 <div class="faq-answer">
-Yukae™ is an all-in-one Discord utility bot built for server owners,
-combining moderation, automation, giveaways, and management tools.
+Yukae is an all-in-one Discord utility bot combining moderation,
+automation and server management in a single system.
 </div>
 </div>
 
 <div class="faq-item">
-<button class="faq-question">Is Yukae™ free to use?<span>▼</span></button>
+<button class="faq-question">Is Yukae free?<span>▼</span></button>
 <div class="faq-answer">
-Yes. Core features are free. Optional upgrades may come later,
-but essential tools stay accessible.
+Yes. Core features are free and accessible to all servers.
 </div>
 </div>
 
 <div class="faq-item">
-<button class="faq-question">How reliable is Yukae™?<span>▼</span></button>
+<button class="faq-question">Is Yukae reliable?<span>▼</span></button>
 <div class="faq-answer">
-Yukae™ runs on optimized infrastructure focused on uptime,
-speed, and stability.
+Yukae runs on optimized infrastructure focused on uptime and speed.
 </div>
 </div>
 
 <div class="faq-item">
-<button class="faq-question">What happens during downtime?<span>▼</span></button>
+<button class="faq-question">How do I get help?<span>▼</span></button>
 <div class="faq-answer">
-Maintenance restarts may happen to improve performance and security.
+Join the official support server to contact the team.
 </div>
-</div>
-
-<div class="faq-item">
-<button class="faq-question">How do I get support?<span>▼</span></button>
-<div class="faq-answer">
-Join the official support server or contact the team directly.
-</div>
-</div>
-
 </div>
 </section>
 
-<!-- Developers -->
-<section id="developers">
-<h2>Developers</h2>
+<!-- DEVELOPERS PAGE -->
+<section id="developers" class="page">
+<h1>Developers</h1>
+
 <div class="card" style="text-align:center">
 <img src="https://cdn.discordapp.com/attachments/1468179129601101916/1468624260242215107/2f49dfa3f97e24eec56d24e9d704c43b.jpg"
-style="width:120px;height:120px;border-radius:50%;margin-bottom:10px;border:2px solid cyan">
+style="width:120px;height:120px;border-radius:50%;border:2px solid cyan;margin-bottom:10px">
 <h3>Power_!</h3>
-<p>Experienced Discord manager & bot developer.</p>
+<p>Discord manager & system developer</p>
 </div>
 </section>
 
-<!-- Support -->
-<section id="support">
-<h2>Support</h2>
+<!-- SUPPORT PAGE -->
+<section id="support" class="page">
+<h1>Support</h1>
+
 <div class="card">
-<p>Support Server: https://discord.gg/ATSCwyk9fg</p>
-<p>Email: support@yukae.bot</p>
+<p>Support Server:</p>
+<p style="color:cyan">https://discord.gg/ATSCwyk9fg</p>
 </div>
 </section>
 
 <footer>
-© 2026 Yukae Bot — All rights reserved
+© 2026 Yukae — All rights reserved
 </footer>
 
 <script>
@@ -201,10 +225,13 @@ setTimeout(()=>{
 document.getElementById("loader").style.display="none";
 },3500);
 
+function showPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
 document.querySelectorAll(".faq-question").forEach(btn=>{
-btn.onclick=()=>{
-btn.parentElement.classList.toggle("active");
-};
+btn.onclick=()=>btn.parentElement.classList.toggle("active");
 });
 </script>
 
